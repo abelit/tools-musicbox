@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Author: omi
-# @Date:   2014-08-24 22:08:33
-# @Last Modified by:   omi
-# @Last Modified time: 2015-03-30 23:36:21
 
-'''
+"""
 __   ___________________________________________
 | \  ||______   |   |______|_____||______|______
 |  \_||______   |   |______|     |______||______
-                                                
+
 ________     __________________________  _____ _     _
-|  |  ||     ||______  |  |      |_____]|     | \___/ 
+|  |  ||     ||______  |  |      |_____]|     | \___/
 |  |  ||_____|______|__|__|_____ |_____]|_____|_/   \_
 
 
@@ -19,7 +15,7 @@ ________     __________________________  _____ _     _
 |   NetEase-MusicBox               320kbps   |
 + ------------------------------------------ +
 |                                            |
-|   ++++++++++++++++++++++++++++++++++++++   | 
+|   ++++++++++++++++++++++++++++++++++++++   |
 |   ++++++++++++++++++++++++++++++++++++++   |
 |   ++++++++++++++++++++++++++++++++++++++   |
 |   ++++++++++++++++++++++++++++++++++++++   |
@@ -32,34 +28,45 @@ ________     __________________________  _____ _     _
 |                                            |
 + ------------------------------------------ +
 
-'''
+"""
+from pprint import pprint
+import os
 
 from setuptools import setup, find_packages
 
+here = os.path.abspath(os.path.dirname(__file__))
+about = {}  # type: dict
 
+with open(os.path.join(here, "NEMbox", "__version__.py"), "r") as f:
+    exec(f.read(), about)
+
+with open("README.md", "r") as f:
+    long_description = f.read()
 setup(
-    name='NetEase-MusicBox',
-    version='0.2.0.8',
+    name=about["__title__"],
+    version=about["__version__"],
+    author=about["__author__"],
+    author_email=about["__author_email__"],
+    url=about["__url__"],
+    description=about["__description__"],
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    license=about["__license__"],
     packages=find_packages(),
-
-    include_package_data=True,
-
-    install_requires=[
-        'requests',
-        'BeautifulSoup4',
-        'pycrypto',
+    install_requires=["requests-cache", "pycryptodomex", "future", "fuzzywuzzy"],
+    entry_points={"console_scripts": ["musicbox = NEMbox.__main__:start"]},
+    keywords=["music", "netease", "cli", "player"],
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: Chinese (Simplified)",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Topic :: Multimedia :: Sound/Audio",
     ],
-
-    entry_points={
-        'console_scripts': [
-            'musicbox = NEMbox:start'
-        ],
-    },
-
-    author='omi',
-    author_email='4399.omi@gmail.com',
-    url='https://github.com/darknessomi/musicbox',
-    description='A sexy command line interface musicbox',
-    keywords=['music', 'netease', 'cli', 'player'],
-    zip_safe=False,
 )

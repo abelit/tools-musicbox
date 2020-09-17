@@ -2,22 +2,19 @@
 # -*- coding: utf-8 -*-
 # @Author: omi
 # @Date:   2014-08-24 21:51:57
-# @Last Modified by:   omi
-# @Last Modified time: 2014-08-25 18:01:59
-
-
+from __future__ import print_function, unicode_literals, division, absolute_import
 import logging
-import const
-import os
 
-FILE_NAME = os.path.join(const.Constant.conf_dir, 'musicbox.log')
-if os.path.isdir(const.Constant.conf_dir) is False:
-    os.mkdir(const.Constant.conf_dir)
+from future.builtins import open
+
+from . import const
+
+FILE_NAME = const.Constant.log_path
 
 
-with open(FILE_NAME, 'a+') as f:
-    f.write('#' * 80)
-    f.write('\n')
+with open(FILE_NAME, "a+") as f:
+    f.write("#" * 80)
+    f.write("\n")
 
 
 def getLogger(name):
@@ -27,7 +24,11 @@ def getLogger(name):
     # File output handler
     fh = logging.FileHandler(FILE_NAME)
     fh.setLevel(logging.DEBUG)
-    fh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(name)s:%(lineno)s: %(message)s'))
+    fh.setFormatter(
+        logging.Formatter(
+            "%(asctime)s - %(levelname)s - %(name)s:%(lineno)s: %(message)s"
+        )
+    )
     log.addHandler(fh)
 
     return log
